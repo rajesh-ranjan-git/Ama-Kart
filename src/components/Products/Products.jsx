@@ -90,36 +90,19 @@ const Products = () => {
     thumbnail: "placeholder.png",
   });
 
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState(0);
-  const [discountedPrice, setDiscountedPrice] = useState(0);
-  const [thumbnail, setThumbnail] = useState("");
-
-  const handleTitle = (event) => {
-    setTitle(event.target.value);
-    setItem({ ...item, title: event.target.value });
-  };
-  const handlePrice = (event) => {
-    setPrice(event.target.value);
-    setItem({ ...item, price: event.target.value });
-  };
-  const handleDiscountedPrice = (event) => {
-    setDiscountedPrice(event.target.value);
-    setItem({ ...item, discountedPrice: event.target.value });
-  };
-  const handleThumbnail = (event) => {
-    setThumbnail(event.target.value);
-    setItem({ ...item, thumbnail: event.target.value });
+  const handleInput = (event) => {
+    setItem({
+      ...item,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const submitForm = (event) => {
     event.preventDefault();
-    setItem({
-      title,
-      price,
-      discountedPrice,
-      thumbnail,
-    });
+    if (item.discountedPrice > item.price) {
+      alert("Discounted price cannot be greater than price.");
+      return;
+    }
   };
 
   return (
@@ -128,40 +111,52 @@ const Products = () => {
         <form onSubmit={submitForm}>
           <h1>Item Card Details</h1>
           <div className="input-field">
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title" name="title">
+              Title
+            </label>
             <input
               type="text"
+              name="title"
               placeholder="Enter Title"
-              value={title}
-              onChange={handleTitle}
+              value={item.title}
+              onChange={handleInput}
             />
             <br></br>
-            <label htmlFor="price">Price</label>
+            <label htmlFor="price" name="price">
+              Price
+            </label>
             <input
               type="number"
+              name="price"
               placeholder="Enter Price"
-              value={price}
-              onChange={handlePrice}
+              value={item.price}
+              onChange={handleInput}
             />
             <br></br>
-            <label htmlFor="discountedPrice">Discounted Price</label>
+            <label htmlFor="discountedPrice" name="discountedPrice">
+              Discounted Price
+            </label>
             <input
               type="number"
+              name="discountedPrice"
               placeholder="Enter Discounted Price"
-              value={discountedPrice}
-              onChange={handleDiscountedPrice}
+              value={item.discountedPrice}
+              onChange={handleInput}
             />
             <br></br>
-            <label htmlFor="thumbnail">Thumbnail</label>
+            <label htmlFor="thumbnail" name="thumbnail">
+              Thumbnail
+            </label>
             <input
               type="text"
+              name="thumbnail"
               placeholder="Enter Thumbnail"
-              value={thumbnail}
-              onChange={handleThumbnail}
+              value={item.thumbnail}
+              onChange={handleInput}
             />
           </div>
           <div className="submit-wrap">
-            <button>Update</button>
+            <button onClick={submitForm}>Update</button>
           </div>
         </form>
       </div>
