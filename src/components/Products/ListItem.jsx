@@ -15,6 +15,7 @@ const ListItem = ({ data }) => {
       setCounter(counter - 1);
     }
   };
+
   return (
     <div className={"item-card"}>
       <img
@@ -32,19 +33,22 @@ const ListItem = ({ data }) => {
         <div className={"title"}>
           <h3>{data.title}</h3>
         </div>
-        {/* <button className={"cart-add"} onClick={handleClick}>
-          <span>Add to Cart</span>
-          <img src={AddToCartIcon} alt="CartIcon" />
-        </button> */}
-        <div className={"cart-addon"}>
-          <button onClick={decreaseCounterByOne}>
-            <span>-</span>
+        {counter < 1 ? (
+          <button className={"cart-add"} onClick={increaseCounterByOne}>
+            <span>Add to Cart</span>
+            <img src={AddToCartIcon} alt="CartIcon" />
           </button>
-          <span className={"counter"}>{counter}</span>
-          <button onClick={increaseCounterByOne}>
-            <span>+</span>
-          </button>
-        </div>
+        ) : (
+          <div className={"cart-addon"}>
+            <button onClick={decreaseCounterByOne}>
+              <span>-</span>
+            </button>
+            <span className={"counter"}>{counter}</span>
+            <button onClick={increaseCounterByOne}>
+              <span>+</span>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

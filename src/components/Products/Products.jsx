@@ -3,24 +3,47 @@ import ListItem from "./ListItem";
 import { useState } from "react";
 
 const Products = () => {
-  const [item, setItem] = useState({
-    id: 0,
-    discountedPrice: 340,
-    price: 450,
-    title: "Title of the Item",
-    thumbnail: "placeholder.png",
-  });
+  const [items, setItems] = useState([
+    {
+      id: 0,
+      discountedPrice: 340,
+      price: 450,
+      title: "Title of the Item0",
+      thumbnail: "placeholder.png",
+    },
+    {
+      id: 1,
+      discountedPrice: 340,
+      price: 450,
+      title: "Title of the Item1",
+      thumbnail: "placeholder.png",
+    },
+    {
+      id: 2,
+      discountedPrice: 340,
+      price: 450,
+      title: "Title of the Item2",
+      thumbnail: "placeholder.png",
+    },
+    {
+      id: 3,
+      discountedPrice: 340,
+      price: 450,
+      title: "Title of the Item3",
+      thumbnail: "placeholder.png",
+    },
+  ]);
 
   const handleInput = (event) => {
-    setItem({
-      ...item,
+    setItems({
+      ...items,
       [event.target.name]: event.target.value,
     });
   };
 
   const submitForm = (event) => {
     event.preventDefault();
-    if (item.discountedPrice > item.price) {
+    if (items.discountedPrice > items.price) {
       alert("Discounted price cannot be greater than price.");
       return;
     }
@@ -28,15 +51,17 @@ const Products = () => {
 
   return (
     <div className={"product-list"}>
-      <div className={"form"}>
+      {/* <div className={"form"}>
         <InputForm
-          item={item}
+          item={items}
           onChangeInput={handleInput}
           onFormSubmit={submitForm}
         />
-      </div>
+      </div> */}
       <div className={"product-list--wrapper"}>
-        <ListItem data={item}></ListItem>
+        {items.map((item) => {
+          return <ListItem data={item} key={item.id} />;
+        })}
       </div>
     </div>
   );
