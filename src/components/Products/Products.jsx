@@ -1,38 +1,60 @@
 import InputForm from "./InputForm";
 import ListItem from "./ListItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Products = () => {
-  const [items, setItems] = useState([
-    {
-      id: 0,
-      discountedPrice: 340,
-      price: 450,
-      title: "Title of the Item0",
-      thumbnail: "placeholder.png",
-    },
-    {
-      id: 1,
-      discountedPrice: 340,
-      price: 450,
-      title: "Title of the Item1",
-      thumbnail: "placeholder.png",
-    },
-    {
-      id: 2,
-      discountedPrice: 340,
-      price: 450,
-      title: "Title of the Item2",
-      thumbnail: "placeholder.png",
-    },
-    {
-      id: 3,
-      discountedPrice: 340,
-      price: 450,
-      title: "Title of the Item3",
-      thumbnail: "placeholder.png",
-    },
-  ]);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    // Using Fetch API
+    // fetch(`https://ama-kart-default-rtdb.firebaseio.com/items.json`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    // Using Axios
+    // axios
+    //   .get(`https://ama-kart-default-rtdb.firebaseio.com/items.json`)
+    //   .then((response) => {
+    //     const data = response.data;
+    //     const transformedData = data.map((item, idx) => {
+    //       return {
+    //         ...item,
+    //         id: idx,
+    //       };
+    //     });
+    //     setItems(transformedData);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    // Using Async and AWait
+    async function fetchItems() {
+      try {
+        const response = await axios.get(
+          `https://ama-kart-default-rtdb.firebaseio.com/items.json`
+        );
+        const data = response.data;
+        const transformedData = data.map((item, idx) => {
+          return {
+            ...item,
+            id: idx,
+          };
+        });
+        setItems(transformedData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchItems();
+  }, []);
 
   const handleInput = (event) => {
     setItems({
