@@ -1,10 +1,12 @@
 import InputForm from "./InputForm";
 import ListItem from "./ListItem";
+import Loader from "../UI/Loader";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Products = () => {
   const [items, setItems] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     // Using Fetch API
@@ -50,6 +52,8 @@ const Products = () => {
         setItems(transformedData);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoader(false);
       }
     }
 
@@ -72,20 +76,23 @@ const Products = () => {
   };
 
   return (
-    <div className={"product-list"}>
-      {/* <div className={"form"}>
+    <>
+      <div className={"product-list"}>
+        {/* <div className={"form"}>
         <InputForm
           item={items}
           onChangeInput={handleInput}
           onFormSubmit={submitForm}
         />
       </div> */}
-      <div className={"product-list--wrapper"}>
-        {items.map((item) => {
-          return <ListItem data={item} key={item.id} />;
-        })}
+        <div className={"product-list--wrapper"}>
+          {items.map((item) => {
+            return <ListItem data={item} key={item.id} />;
+          })}
+        </div>
       </div>
-    </div>
+      {loader && <Loader />}
+    </>
   );
 };
 
