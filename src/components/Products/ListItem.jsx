@@ -2,31 +2,34 @@ import { Fragment, useState } from "react";
 import AddToCartIcon from "../../assets/icons/add_cart.svg";
 import Modal from "../UI/Modal";
 
-const ListItem = ({ data }) => {
+const ListItem = ({ data, onAdd, onRemove }) => {
   const [counter, setCounter] = useState(0);
-  const [showModal, setShowModal] = useState(false);
+  const [showItemsModal, setShowItemsModal] = useState(false);
 
   const increaseCounterByOne = (e) => {
+    onAdd(data.id);
     e.stopPropagation();
     setCounter(counter + 1);
   };
 
   const decreaseCounterByOne = (e) => {
     e.stopPropagation();
-    if (counter <= 0) {
+    if (counter === 0) {
       return;
-    } else {
-      setCounter(counter - 1);
     }
+    if (counter == 1) {
+      onRemove(data.id);
+    }
+    setCounter(counter - 1);
   };
 
-  const handleModal = () => {
-    setShowModal((previousState) => !previousState);
+  const handleItemsModal = () => {
+    setShowItemsModal((previousState) => !previousState);
   };
 
   return (
     <Fragment>
-      <div className={"item-card"} onClick={handleModal}>
+      <div className={"item-card"} onClick={handleItemsModal}>
         <img
           className={"item-fluid"}
           src={`/assets/${data.thumbnail}`}
@@ -60,8 +63,8 @@ const ListItem = ({ data }) => {
           )}
         </div>
       </div>
-      {showModal && (
-        <Modal onClose={handleModal}>
+      {showItemsModal && (
+        <Modal onClose={handleItemsModal}>
           <div className="item-card__modal">
             <div className="img-wrap">
               <img

@@ -4,9 +4,10 @@ import Loader from "../UI/Loader";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Products = () => {
+const Products = ({ onAddItem, onRemoveItem }) => {
   const [items, setItems] = useState([]);
   const [loader, setLoader] = useState(true);
+  const [presentItems, setPresentItems] = useState([]);
 
   useEffect(() => {
     // Using Fetch API
@@ -60,18 +61,36 @@ const Products = () => {
     fetchItems();
   }, []);
 
-  const handleInput = (event) => {
-    setItems({
-      ...items,
-      [event.target.name]: event.target.value,
-    });
+  // const handleInput = (event) => {
+  //   setItems({
+  //     ...items,
+  //     [event.target.name]: event.target.value,
+  //   });
+  // };
+
+  // const submitForm = (event) => {
+  //   event.preventDefault();
+  //   if (items.discountedPrice > items.price) {
+  //     alert("Discounted price cannot be greater than price.");
+  //     return;
+  //   }
+  // };
+
+  const handleAddItem = (id) => {
+    if (presentItems.indexOf(id) > -1) {
+      return;
+    }
+    setPresentItems([...presentItems, id]);
+    onAddItem();
   };
 
-  const submitForm = (event) => {
-    event.preventDefault();
-    if (items.discountedPrice > items.price) {
-      alert("Discounted price cannot be greater than price.");
-      return;
+  const handleRemoveItem = (id) => {
+    let index = presentItems.indexOf(id);
+    if (index > -1) {
+      let items = [...presentItems];
+      items.splice(index, 1);
+      setPresentItems(...items);
+      onRemoveItem();
     }
   };
 
@@ -87,7 +106,14 @@ const Products = () => {
       </div> */}
         <div className={"product-list--wrapper"}>
           {items.map((item) => {
-            return <ListItem data={item} key={item.id} />;
+            return (
+              <ListItem
+                data={item}
+                key={item.id}
+                onAdd={handleAddItem}
+                onRemove={handleRemoveItem}
+              />
+            );
           })}
         </div>
       </div>

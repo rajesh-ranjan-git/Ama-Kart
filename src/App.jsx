@@ -1,14 +1,25 @@
-// import React from "react";
+import React from "react";
+import { useState } from "react";
 import Header from "./components/Layout/Header";
 import SubHeader from "./components/Layout/SubHeader";
 import Products from "./components/Products/Products";
 
 const App = () => {
+  const [cartItemsCounter, setCartItemsCounter] = useState(0);
+
+  const handleAddItems = () => {
+    setCartItemsCounter(cartItemsCounter + 1);
+  };
+
+  const handleRemoveItems = () => {
+    setCartItemsCounter(cartItemsCounter - 1);
+  };
+
   return (
     <div>
-      <Header />
+      <Header cartItemsCounter={cartItemsCounter} />
       <SubHeader />
-      <Products />
+      <Products onAddItem={handleAddItems} onRemoveItem={handleRemoveItems} />
     </div>
   );
 
