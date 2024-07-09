@@ -1,7 +1,8 @@
 import React, { Fragment, useState } from "react";
 import Modal from "../UI/Modal";
+import CartItem from "./CartItem";
 
-const index = ({ cartItemsCounter }) => {
+const index = ({ count, items }) => {
   const [showCartModal, setShowCartModal] = useState(false);
 
   const handleCartModal = () => {
@@ -11,7 +12,7 @@ const index = ({ cartItemsCounter }) => {
   return (
     <Fragment>
       <button onClick={handleCartModal}>
-        <span data-items={cartItemsCounter}>Cart</span>
+        <span data-items={count}>Cart</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="icon icon-tabler icon-tabler-shopping-cart-plus"
@@ -37,39 +38,17 @@ const index = ({ cartItemsCounter }) => {
           <div className="checkout-modal">
             <h2>Checkout Modal</h2>
             <div className="checkout-modal_list">
-              {cartItemsCounter > 0 ? (
-                <div className="checkout-modal_list-item">
-                  <div className="img-wrap">
-                    <img
-                      src={"/assets/placeholder.png"}
-                      alt="img-cart-item"
-                      className="img-fluid"
-                    />
-                  </div>
-                  <div className="information">
-                    <div>
-                      <h4>Title of the Product</h4>
-                      <div className="pricing">
-                        <span>2000</span>
-                        <small>
-                          <strike>2500</strike>
-                        </small>
-                      </div>
-                    </div>
-                    <div className="cart-addon cart-addon__modal">
-                      <button>-</button>
-                      <span className="counter">{0}</span>
-                      <button>+</button>
-                    </div>
-                  </div>
-                </div>
+              {count > 0 ? (
+                items.map((item) => {
+                  return <CartItem data={item} key={item.id} />;
+                })
               ) : (
                 <div className="empty-cart">
                   Please add something on your cart!
                 </div>
               )}
             </div>
-            {cartItemsCounter > 0 && (
+            {count > 0 && (
               <div className="checkout-modal_footer">
                 <div className="totalAmount">
                   <h4>Total Amount: </h4>

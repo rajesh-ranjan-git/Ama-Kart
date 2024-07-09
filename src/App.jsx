@@ -5,19 +5,35 @@ import SubHeader from "./components/Layout/SubHeader";
 import Products from "./components/Products/Products";
 
 const App = () => {
-  const [cartItemsCounter, setCartItemsCounter] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
 
-  const handleAddItems = () => {
-    setCartItemsCounter(cartItemsCounter + 1);
+  const handleAddItems = (item) => {
+    let items = [...cartItems];
+    let index = items.findIndex((i) => i.id === item.id);
+    if (index > -1) {
+      items[index] = item;
+    } else {
+      items.push(item);
+    }
+    setCartItems([...items]);
+    // setCartItems(cartItems + 1);
   };
 
-  const handleRemoveItems = () => {
-    setCartItemsCounter(cartItemsCounter - 1);
+  const handleRemoveItems = (item) => {
+    let items = [...cartItems];
+    let index = items.findIndex((i) => i.id === item.id);
+    if (items[index].quantity === 0) {
+      items.splice(index, 1);
+    } else {
+      items[index] = item;
+    }
+    setCartItems([...items]);
+    // setCartItems(cartItems - 1);
   };
 
   return (
     <div>
-      <Header cartItemsCounter={cartItemsCounter} />
+      <Header count={cartItems.length} items={cartItems} />
       <SubHeader />
       <Products onAddItem={handleAddItems} onRemoveItem={handleRemoveItems} />
     </div>
