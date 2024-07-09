@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import ReactDOM from "react-dom";
 import { Backdrop } from "./Loader";
 
 const Modal = ({ onClose }) => {
@@ -11,7 +12,8 @@ const Modal = ({ onClose }) => {
             Modal Content!
             <button onClick={onClose}>X</button>
           </div>
-        </Fragment>
+        </Fragment>,
+        document.getElementById("modal-root")
       )}
     </Fragment>
   );
