@@ -52,7 +52,14 @@ const index = ({ count, items }) => {
               <div className="checkout-modal_footer">
                 <div className="totalAmount">
                   <h4>Total Amount: </h4>
-                  <h4>2000 INR</h4>
+                  <h4>
+                    {items.reduce((previous, current) => {
+                      return (
+                        previous + current.discountedPrice * current.quantity
+                      );
+                    }, 0)}
+                    <span style={{ marginLeft: "4px" }}>INR</span>
+                  </h4>
                 </div>
                 <button>Order Now</button>
               </div>
