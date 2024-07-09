@@ -6,11 +6,13 @@ const ListItem = ({ data }) => {
   const [counter, setCounter] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
-  const increaseCounterByOne = () => {
+  const increaseCounterByOne = (e) => {
+    e.stopPropagation();
     setCounter(counter + 1);
   };
 
-  const decreaseCounterByOne = () => {
+  const decreaseCounterByOne = (e) => {
+    e.stopPropagation();
     if (counter <= 0) {
       return;
     } else {
@@ -58,7 +60,45 @@ const ListItem = ({ data }) => {
           )}
         </div>
       </div>
-      {showModal && <Modal onClose={handleModal} />}
+      {showModal && (
+        <Modal onClose={handleModal}>
+          <div className="item-card__modal">
+            <div className="img-wrap">
+              <img
+                className={"item-fluid"}
+                src={`/assets/${data.thumbnail}`}
+                alt="Some Title"
+              />
+            </div>
+            <div className="meta">
+              <h3>{data.title}</h3>
+              <div className={"pricing"}>
+                <span>₹{data.discountedPrice}</span>
+                <small>
+                  <strike>₹{data.price}</strike>
+                </small>
+              </div>
+              <p>{data.description}</p>
+              {counter < 1 ? (
+                <button className={"cart-add"} onClick={increaseCounterByOne}>
+                  <span>Add to Cart</span>
+                  <img src={AddToCartIcon} alt="CartIcon" />
+                </button>
+              ) : (
+                <div className={"cart-addon"}>
+                  <button onClick={decreaseCounterByOne}>
+                    <span>-</span>
+                  </button>
+                  <span className={"counter"}>{counter}</span>
+                  <button onClick={increaseCounterByOne}>
+                    <span>+</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </Modal>
+      )}
     </Fragment>
   );
 };
