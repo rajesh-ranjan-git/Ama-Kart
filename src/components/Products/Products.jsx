@@ -4,7 +4,7 @@ import Loader from "../UI/Loader";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Products = ({ onAddItem, onRemoveItem }) => {
+const Products = ({ onAddItem, onRemoveItem, eventState }) => {
   const [items, setItems] = useState([]);
   const [loader, setLoader] = useState(true);
   // const [presentItems, setPresentItems] = useState([]);
@@ -61,6 +61,16 @@ const Products = ({ onAddItem, onRemoveItem }) => {
 
     fetchItems();
   }, []);
+
+  useEffect(() => {
+    if (eventState.id > -1) {
+      if (eventState.type === 1) {
+        handleAddItem(eventState.id);
+      } else if (eventState.type === -1) {
+        handleRemoveItem(eventState.id);
+      }
+    }
+  }, [eventState]);
 
   // const handleInput = (event) => {
   //   setItems({

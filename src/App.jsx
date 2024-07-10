@@ -6,6 +6,7 @@ import Products from "./components/Products/Products";
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [eventQueue, setEventQueue] = useState({ id: "", type: "" });
 
   const handleAddItems = (item) => {
     let items = [...cartItems];
@@ -31,11 +32,26 @@ const App = () => {
     // setCartItems(cartItems - 1);
   };
 
+  const handleEventQueue = (id, type) => {
+    setEventQueue({
+      id,
+      type,
+    });
+  };
+
   return (
     <div>
-      <Header count={cartItems.length} items={cartItems} />
+      <Header
+        count={cartItems.length}
+        items={cartItems}
+        onHandleEvent={handleEventQueue}
+      />
       <SubHeader />
-      <Products onAddItem={handleAddItems} onRemoveItem={handleRemoveItems} />
+      <Products
+        onAddItem={handleAddItems}
+        onRemoveItem={handleRemoveItems}
+        eventState={eventQueue}
+      />
     </div>
   );
 

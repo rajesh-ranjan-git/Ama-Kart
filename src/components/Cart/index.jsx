@@ -1,12 +1,19 @@
 import React, { Fragment, useState } from "react";
 import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
+import OrderSuccessModal from "../UI/OrderSuccess";
 
-const index = ({ count, items }) => {
+const index = ({ count, items, onHandleEvent }) => {
   const [showCartModal, setShowCartModal] = useState(false);
+  const [showOrderModal, setShowOrderModal] = useState(false);
 
   const handleCartModal = () => {
     setShowCartModal((previousState) => !previousState);
+  };
+
+  const handleOrderModal = () => {
+    setShowCartModal(false);
+    setShowOrderModal((previousState) => !previousState);
   };
 
   return (
@@ -40,7 +47,14 @@ const index = ({ count, items }) => {
             <div className="checkout-modal_list">
               {count > 0 ? (
                 items.map((item) => {
-                  return <CartItem data={item} key={item.id} />;
+                  return (
+                    <CartItem
+                      data={item}
+                      onEmitIncreaseItem={(id) => onHandleEvent(id, 1)}
+                      onEmitDecreaseItem={(id) => onHandleEvent(id, -1)}
+                      key={item.id}
+                    />
+                  );
                 })
               ) : (
                 <div className="empty-cart">
@@ -61,12 +75,13 @@ const index = ({ count, items }) => {
                     <span style={{ marginLeft: "4px" }}>INR</span>
                   </h4>
                 </div>
-                <button>Order Now</button>
+                <button onClick={handleOrderModal}>Order Now</button>
               </div>
             )}
           </div>
         </Modal>
       )}
+      {showOrderModal && <OrderSuccessModal onClose={handleOrderModal} />}
     </Fragment>
   );
 };
