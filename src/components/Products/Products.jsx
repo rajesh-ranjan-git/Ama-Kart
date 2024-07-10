@@ -3,7 +3,7 @@ import Loader from "../UI/Loader";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Products = ({ onAddItem, onRemoveItem, eventState }) => {
+const Products = () => {
   const [items, setItems] = useState([]);
   const [loader, setLoader] = useState(true);
 
@@ -31,47 +31,12 @@ const Products = ({ onAddItem, onRemoveItem, eventState }) => {
     fetchItems();
   }, []);
 
-  useEffect(() => {
-    if (eventState.id > -1) {
-      if (eventState.type === 1) {
-        handleAddItem(eventState.id);
-      } else if (eventState.type === -1) {
-        handleRemoveItem(eventState.id);
-      }
-    }
-  }, [eventState]);
-
-  const handleAddItem = (id) => {
-    let data = [...items];
-    let index = data.findIndex((i) => i.id === id);
-    data[index].quantity += 1;
-    setItems([...data]);
-    onAddItem(data[index]);
-  };
-
-  const handleRemoveItem = (id) => {
-    let data = [...items];
-    let index = data.findIndex((i) => i.id === id);
-    if (data[index].quantity !== 0) {
-      data[index].quantity -= 1;
-      setItems([...data]);
-      onRemoveItem(data[index]);
-    }
-  };
-
   return (
     <>
       <div className={"product-list"}>
         <div className={"product-list--wrapper"}>
           {items.map((item) => {
-            return (
-              <ListItem
-                data={item}
-                key={item.id}
-                onAdd={handleAddItem}
-                onRemove={handleRemoveItem}
-              />
-            );
+            return <ListItem data={item} key={item.id} />;
           })}
         </div>
       </div>

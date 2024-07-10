@@ -3,6 +3,11 @@ import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
 import OrderSuccessModal from "../UI/OrderSuccess";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  addItemHandler,
+  removeItemHandler,
+  clearCartHandler,
+} from "../../actions";
 
 const index = () => {
   const [showCartModal, setShowCartModal] = useState(false);
@@ -19,27 +24,15 @@ const index = () => {
 
   const handleOrderModal = () => {
     setShowCartModal(false);
-    dispatch({
-      type: "CLEAR_CART",
-    });
+    dispatch(clearCartHandler());
     setShowOrderModal((previousState) => !previousState);
   };
 
   const dispatchEvents = (type, item) => {
     if (type === 1) {
-      dispatch({
-        type: "ADD_ITEM",
-        payload: {
-          item: item,
-        },
-      });
+      dispatch(addItemHandler(item));
     } else if (type === -1) {
-      dispatch({
-        type: "REMOVE_ITEM",
-        payload: {
-          id: item.id,
-        },
-      });
+      dispatch(removeItemHandler(item.id));
     }
   };
 
