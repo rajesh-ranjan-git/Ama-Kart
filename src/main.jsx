@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Products from "./components/Products/Products";
 import NotFound from "./components/Products/NotFound";
 import Error from "./components/Products/Error";
+import AuthIndex from "./components/Auth";
 
 const appRouter = createBrowserRouter([
   {
@@ -21,6 +22,18 @@ const appRouter = createBrowserRouter([
       {
         path: "/:category?",
         element: <Products />,
+      },
+      // {
+      //   path: "/:type(login|signup)",
+      //   element: <AuthIndex />,
+      // },
+      {
+        path: "/login",
+        element: <AuthIndex />,
+      },
+      {
+        path: "/signup",
+        element: <AuthIndex />,
       },
       {
         path: "/404",

@@ -1,7 +1,13 @@
+import { useNavigate } from "react-router";
 import Cart from "../Cart";
 import SearchBox from "../UI/Search";
 
 const Header = () => {
+  const Navigate = useNavigate();
+  const handleLogin = () => {
+    Navigate("/login");
+  };
+
   return (
     <header>
       <div className="nav-brand">
@@ -30,6 +36,9 @@ const Header = () => {
       <div className="searchBox-container">
         <SearchBox />
       </div>
+      <button className="login-btn" onClick={handleLogin}>
+        Login
+      </button>
       <div className="cart-container">
         <Cart />
       </div>
