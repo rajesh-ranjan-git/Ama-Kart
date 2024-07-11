@@ -1,21 +1,23 @@
+import { NavLink } from "react-router-dom";
+
 const SubHeader = () => {
   return (
     <div className="subheader-container">
       <ul>
         <li>
-          <a href="">Home</a>
+          <NavLink to="/">Home</NavLink>
         </li>
         <li>
-          <a href="">Category 1</a>
+          <NavLink to="/category-1">Category 1</NavLink>
         </li>
         <li>
-          <a href="">Category 2</a>
+          <NavLink to="/category-2">Category 2</NavLink>
         </li>
         <li>
-          <a href="">Category 3</a>
+          <NavLink to="/category-3">Category 3</NavLink>
         </li>
         <li>
-          <a href="">Category 4</a>
+          <NavLink to="/category-4">Category 4</NavLink>
         </li>
       </ul>
     </div>
