@@ -2,13 +2,15 @@ import ListItem from "./ListItem";
 import Loader from "../UI/Loader";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 const Products = () => {
   const [items, setItems] = useState([]);
   const [loader, setLoader] = useState(true);
   const params = useParams();
   const Navigate = useNavigate();
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search).get("search");
 
   useEffect(() => {
     async function fetchItems() {
@@ -17,6 +19,11 @@ const Products = () => {
         if (params.category) {
           slug = `items-${params.category}.json`;
         }
+
+        if (queryParams) {
+          slug += `?search=${queryParams}`;
+        }
+
         const response = await axios.get(
           `https://ama-kart-default-rtdb.firebaseio.com/${slug}`
         );
@@ -47,7 +54,7 @@ const Products = () => {
       setItems([]);
       setLoader(true);
     };
-  }, [params]);
+  }, [params.category, queryParams]);
 
   const handleNotFound = () => {
     Navigate("/404");
