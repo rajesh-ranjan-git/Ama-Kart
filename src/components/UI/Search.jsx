@@ -1,11 +1,16 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const SearchBox = () => {
   const Navigate = useNavigate();
-  const { querySearch } = useLocation();
-  const queryParams = new URLSearchParams(querySearch).get("search");
-  const [search, setSearch] = useState(queryParams || "");
+  const querySearch = useLocation();
+
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(querySearch.search).get("search");
+    setSearch(queryParams || "");
+  }, [querySearch]);
 
   const handleInput = (e) => {
     setSearch(e.target.value);
@@ -17,6 +22,7 @@ const SearchBox = () => {
       search: `search=${search}`,
     });
   };
+
   return (
     <Fragment>
       <form onSubmit={handleFormSubmission}>
