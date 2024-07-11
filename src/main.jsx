@@ -7,6 +7,7 @@ import store from "./store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Products from "./components/Products/Products";
 import NotFound from "./components/Products/NotFound";
+import Error from "./components/Products/Error";
 
 const appRouter = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const appRouter = createBrowserRouter([
         element: <NotFound />,
       },
     ],
-    errorElement: <NotFound />,
+    errorElement: <Error />,
   },
 ]);
 
