@@ -21,11 +21,12 @@ const appRouter = createBrowserRouter([
         path: "/:category?",
         element: <Products />,
       },
+      {
+        path: "/404",
+        element: <NotFound />,
+      },
     ],
-  },
-  {
-    path: "/404",
-    element: <NotFound />,
+    errorElement: <NotFound />,
   },
 ]);
 
