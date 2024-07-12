@@ -1,5 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { NavLink } from "react-router-dom";
 
 const AuthIndex = () => {
@@ -7,6 +8,8 @@ const AuthIndex = () => {
     email: "",
     password: "",
   });
+
+  const location = useLocation();
 
   const handleInput = (e) => {
     setDetails({
@@ -17,7 +20,28 @@ const AuthIndex = () => {
 
   const handleSubmission = (e) => {
     e.preventDefault();
+
     console.log(details);
+
+    if (location.pathname === "/signup") {
+      signupWithEmailAndPassword();
+    }
+  };
+
+  const signupWithEmailAndPassword = async () => {
+    try {
+      const response = await axios.post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=[3AIzaSyDTqbgeII96O1HO3ismm_xgRhq8lN4WH6U]`,
+        {
+          email: details.email,
+          password: details.password,
+          returnSecureToken: true,
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -53,7 +77,9 @@ const AuthIndex = () => {
             />
           </div>
           <div className="button-wrap">
-            <div className="login-btn">Login</div>
+            <div className="login-btn" onClick={handleSubmission}>
+              {location.pathname === "/login" ? "Login" : "Signup"}
+            </div>
           </div>
         </form>
       </div>
